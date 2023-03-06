@@ -1,6 +1,5 @@
 package com.lear.game;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -35,9 +34,9 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         System.out.println("请输入奖品数~");
 
-        for (int i = 0; i < Award.NAME.length; i++) {
+        for (int i = 1; i < Award.NAME.length; i++) {
             System.out.print(Award.NAME[i]+"数:");
-            Award.awardNo[i] = scanner.nextInt();
+            Award.awardNumber[i] = scanner.nextInt();
         }
 
     }

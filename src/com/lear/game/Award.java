@@ -1,17 +1,17 @@
 package com.lear.game;
 
-import java.util.Arrays;
-
 /**
  * 奖品类
  * @author 天狗
  */
 public class Award {
 
-    public static final String[] NAME = {"状元", "对堂", "三红", "四进", "二举", "一秀"};
-    public static int[] awardNo = new int[NAME.length];
-    public static int topNo;
+    public static final String[] NAME = {"什么都没有","状元", "对堂", "三红", "四进", "二举", "一秀"};
+    public static int[] awardNumber = new int[NAME.length];
+    public static int topNo = -1;
+    public static int topAward;
 
+    public static final int NO_AWARD = 0;
     public static final int YI_XIU = 1;
     public static final int ER_JU = 2;
     public static final int SI_JIN = 3;
@@ -29,7 +29,7 @@ public class Award {
     public static final int DICE_5 = 4;
     public static final int DICE_6 = 5;
 
-    public static int getAward(int[] rollList) {
+    public static int calculateAward(int[] rollList) {
         int award = 0;
         int[] numberCount = new int[6];
         for (int roll : rollList) {
@@ -95,12 +95,39 @@ public class Award {
         return award;
     }
 
-    public static String getAwardName(int award) {
+    public static String getAward(int award, int userId) {
+//        int awardNo = calculateAward(rollList);
+        if (award>ZHUANG_YUAN_1) {
+            topNo = userId;
+            topAward = award;
+        }
+        awardNumber[award]--;
+        // 无奖品 则不得奖
+        if (awardNumber[award]==0) {
+            award=NO_AWARD;
+        }
         return NAME[award];
     }
 
-    public static String getAwardName(int[] rollList) {
-        return getAwardName(getAward(rollList));
+    public static String getAward(int[] rollList, int userId) {
+        int awardNo = calculateAward(rollList);
+        awardNumber[awardNo]--;
+        // 无奖品 则不得奖
+        if (awardNumber[awardNo]==0) {
+            awardNo=NO_AWARD;
+        }
+        return getAward(awardNo, userId);
     }
+
+    public static boolean noAwardLeft() {
+        for (int i : awardNumber) {
+            if (i!=0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
 }
