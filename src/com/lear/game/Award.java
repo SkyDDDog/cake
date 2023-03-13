@@ -119,13 +119,27 @@ public class Award {
         return getAward(awardNo, userId);
     }
 
+    public static int getAwardNo(int[] rollList, int userId) {
+        int awardNo = calculateAward(rollList);
+        awardNumber[awardNo]--;
+        // 无奖品 则不得奖
+        if (awardNumber[awardNo]==0) {
+            return NO_AWARD;
+        }
+        return awardNo;
+    }
+
     public static boolean noAwardLeft() {
         for (int i : awardNumber) {
             if (i!=0) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
+    }
+
+    public static boolean noAwardLeft(int index) {
+        return Award.awardNumber[index] == 0;
     }
 
 
